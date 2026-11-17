@@ -27,8 +27,8 @@ if (!(await exists(src))) {
 
 await mkdir(outDir, { recursive: true })
 
-for (const size of [192, 512]) {
-  const out = path.join(outDir, `icon-${size}.png`)
+for (const size of [180, 192, 512]) {
+  const out = path.join(outDir, size === 180 ? 'apple-touch-icon.png' : `icon-${size}.png`)
   await sharp(src)
     .resize(size, size, {
       fit: 'contain',

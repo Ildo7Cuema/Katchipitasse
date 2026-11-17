@@ -13,7 +13,7 @@ export default defineConfig({
       srcDir: 'src',
       filename: 'sw.js',
       registerType: 'prompt',
-      includeAssets: ['logo.png', 'favicon.svg', 'pwa/icon-192.png', 'pwa/icon-512.png'],
+      includeAssets: ['logo.png', 'favicon.svg', 'pwa/apple-touch-icon.png', 'pwa/icon-192.png', 'pwa/icon-512.png'],
       manifest: {
         id: '/',
         name: 'Katchipitasse Elavoko',

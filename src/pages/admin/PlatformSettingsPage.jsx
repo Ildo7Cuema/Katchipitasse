@@ -1,8 +1,15 @@
 import { Link } from 'react-router-dom'
-import { CreditCard, Scale, Settings2, Shield, Store, WalletCards } from 'lucide-react'
+import { CreditCard, Eye, Scale, Settings2, Shield, Store, WalletCards } from 'lucide-react'
 import { AdminHero } from '@/components/AdminUI'
 
 const tiles = [
+  {
+    to: '/admin/utilizacao',
+    icon: Eye,
+    title: 'Utilização',
+    description: 'Quem usa a app, quando e por que canal.',
+    dark: false,
+  },
   {
     to: '/admin/assinaturas',
     icon: CreditCard,

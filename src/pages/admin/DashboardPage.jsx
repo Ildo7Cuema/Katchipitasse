@@ -85,8 +85,11 @@ export default function DashboardPage() {
           icon={Activity}
           actions={
             <>
+              <Link to="/admin/utilizacao">
+                <Button variant="light">Utilização</Button>
+              </Link>
               <Link to="/admin/assinaturas">
-                <Button variant="light">Assinaturas</Button>
+                <Button variant="outlineLight">Assinaturas</Button>
               </Link>
               <Link to="/admin/regras">
                 <Button variant="outlineLight">Regras</Button>

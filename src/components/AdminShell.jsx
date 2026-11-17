@@ -11,6 +11,7 @@ import {
   Shield,
   Activity,
   CreditCard,
+  Eye,
   Scale,
   WalletCards,
 } from 'lucide-react'
@@ -38,6 +39,7 @@ const storeLinks = [
 
 const superLinks = [
   { to: '/admin', label: 'Monitorização', icon: Activity, end: true },
+  { to: '/admin/utilizacao', label: 'Utilização', icon: Eye },
   { to: '/admin/assinaturas', label: 'Assinatura', icon: CreditCard },
   { to: '/admin/pagamentos', label: 'Pagamentos', icon: WalletCards },
   { to: '/admin/regras', label: 'Regras', icon: Scale },

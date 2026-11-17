@@ -16,6 +16,16 @@ export function formatDate(value) {
   }).format(new Date(value))
 }
 
+export function formatDateTime(value) {
+  if (!value) return '—'
+  return new Intl.DateTimeFormat('pt-PT', {
+    day: '2-digit',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(value))
+}
+
 export function statusLabel(status) {
   const map = {
     pendente: 'Pendente',

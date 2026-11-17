@@ -32,6 +32,8 @@ import StoreSubscriptionPage from '@/pages/admin/StoreSubscriptionPage'
 import PaymentGpoAdminPage from '@/pages/admin/PaymentGpoAdminPage'
 import RulesAdminPage from '@/pages/admin/RulesAdminPage'
 import PlatformSettingsPage from '@/pages/admin/PlatformSettingsPage'
+import UsageMonitorPage from '@/pages/admin/UsageMonitorPage'
+import UsageTracker from '@/components/UsageTracker'
 
 function StoreOnly({ children }) {
   return <RequireStoreAdmin>{children}</RequireStoreAdmin>
@@ -44,6 +46,7 @@ function SuperOnly({ children }) {
 export default function App() {
   return (
     <BrowserRouter>
+      <UsageTracker />
       <Routes>
         <Route element={<AppShell />}>
           <Route index element={<HomePage />} />
@@ -87,6 +90,7 @@ export default function App() {
           {/* Plataforma — apenas super_admin */}
           <Route path="assinaturas" element={<SuperOnly><SubscriptionsAdminPage /></SuperOnly>} />
           <Route path="regras" element={<SuperOnly><RulesAdminPage /></SuperOnly>} />
+          <Route path="utilizacao" element={<SuperOnly><UsageMonitorPage /></SuperOnly>} />
           <Route path="plataforma" element={<SuperOnly><PlatformSettingsPage /></SuperOnly>} />
           <Route path="utilizadores" element={<SuperOnly><StaffAdminPage /></SuperOnly>} />
         </Route>

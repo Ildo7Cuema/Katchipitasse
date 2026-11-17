@@ -16,6 +16,7 @@ import {
   UtensilsCrossed,
   Activity,
   CreditCard,
+  Eye,
   Scale,
   WalletCards,
 } from 'lucide-react'
@@ -44,6 +45,7 @@ const storeHub = [
 
 const platformHub = [
   { to: '/admin', title: 'Monitorização', description: 'Uso e saúde da plataforma', icon: Activity },
+  { to: '/admin/utilizacao', title: 'Utilização', description: 'Quem, quando e como usa a app', icon: Eye },
   { to: '/admin/assinaturas', title: 'Assinatura anual', description: 'Valor, validade e bloqueio da app', icon: CreditCard },
   { to: '/admin/pagamentos', title: 'Pagamentos (GPO)', description: 'Destino dos comprovativos da assinatura', icon: WalletCards },
   { to: '/admin/regras', title: 'Regras', description: 'Políticas da aplicação', icon: Scale },

@@ -1,6 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { isStaffRole, isSuperAdminRole } from '@/lib/roles'
 import { isSupabaseConfigured, supabase } from '@/lib/supabase'
+import { detectUsageChannel } from '@/lib/usageChannel'
+import { logUsageEvent } from '@/services/api'
 
 const AuthContext = createContext(null)
 
@@ -79,6 +81,15 @@ export function AuthProvider({ children }) {
     if (error) throw error
     setSession(data.session)
     const nextProfile = data.user ? await loadProfile(data.user.id) : null
+    if (data.user) {
+      void logUsageEvent({
+        userId: data.user.id,
+        role: nextProfile?.role || null,
+        eventType: 'login',
+        path: '/entrar',
+        channel: detectUsageChannel(),
+      })
+    }
     return { ...data, profile: nextProfile }
   }, [loadProfile])
 

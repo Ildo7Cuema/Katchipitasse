@@ -24,12 +24,24 @@ export function isMobileDevice() {
   return mobileUa || (Boolean(coarse) && Boolean(narrow))
 }
 
-export function isIosSafari() {
+/** Qualquer iPhone/iPad (Safari, Chrome, etc.) — nenhum tem beforeinstallprompt. */
+export function isIosDevice() {
+  if (typeof window === 'undefined') return false
   const ua = navigator.userAgent || ''
-  const iOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+  return /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+}
+
+export function isIosSafari() {
+  if (!isIosDevice()) return false
+  const ua = navigator.userAgent || ''
   const webkit = /WebKit/i.test(ua)
-  const chrome = /CriOS|Chrome|EdgiOS|FxiOS/i.test(ua)
-  return iOS && webkit && !chrome
+  const other = /CriOS|Chrome|EdgiOS|FxiOS|OPiOS|OPT\//i.test(ua)
+  return webkit && !other
+}
+
+export function isAndroidDevice() {
+  if (typeof window === 'undefined') return false
+  return /Android/i.test(navigator.userAgent || '')
 }
 
 export function wasInstallUnlocked() {
@@ -48,10 +60,22 @@ export function markInstallUnlocked() {
   }
 }
 
+export function clearInstallUnlocked() {
+  try {
+    localStorage.removeItem(INSTALL_UNLOCK_KEY)
+  } catch {
+    /* ignore */
+  }
+}
+
+/**
+ * Bloqueia telemóvel no browser até a app estar em modo standalone (ícone).
+ * O flag localStorage só dá uma graça curta após confirmação nativa Android,
+ * para o utilizador fechar o separador e abrir pelo ícone.
+ */
 export function shouldForceInstall() {
   if (isNativeApp()) return false
   if (isStandaloneDisplay()) return false
-  if (wasInstallUnlocked()) return false
   if (!isMobileDevice()) return false
   return true
 }

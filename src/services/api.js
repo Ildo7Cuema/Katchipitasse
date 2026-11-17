@@ -217,6 +217,15 @@ export async function createOrder({ userId, customerName, customerPhone, notes, 
     url: '/admin/pedidos',
   })
 
+  void logUsageEvent({
+    userId,
+    role: 'cliente',
+    eventType: 'order',
+    path: '/restaurante',
+    channel: typeof window !== 'undefined' && window.matchMedia?.('(display-mode: standalone)')?.matches ? 'pwa' : 'web',
+    meta: { order_id: order.id },
+  })
+
   return order
 }
 
@@ -299,6 +308,15 @@ export async function createReservation(payload) {
     url: '/admin/reservas',
   })
 
+  void logUsageEvent({
+    userId: payload.user_id || null,
+    role: 'cliente',
+    eventType: 'reservation',
+    path: '/hospedaria',
+    channel: typeof window !== 'undefined' && window.matchMedia?.('(display-mode: standalone)')?.matches ? 'pwa' : 'web',
+    meta: { reservation_id: data.id },
+  })
+
   return data
 }
 
@@ -367,6 +385,75 @@ export async function updateUserRole(userId, role) {
     .single()
   if (error) throw error
   return data
+}
+
+export async function touchLastSeen() {
+  if (!isSupabaseConfigured) return
+  try {
+    await requireClient().rpc('touch_profile_last_seen')
+  } catch {
+    /* migration 012 opcional */
+  }
+}
+
+export async function logUsageEvent({
+  userId = null,
+  guestKey = null,
+  role = null,
+  eventType,
+  path = null,
+  channel = 'unknown',
+  meta = {},
+}) {
+  if (!isSupabaseConfigured) return null
+  const client = requireClient()
+  const payload = {
+    user_id: userId || null,
+    guest_key: userId ? null : guestKey,
+    role: role || null,
+    event_type: eventType,
+    path: path || null,
+    channel,
+    user_agent: typeof navigator !== 'undefined' ? navigator.userAgent.slice(0, 280) : null,
+    meta,
+  }
+  const { error } = await client.from('app_usage_events').insert(payload)
+  if (error) {
+    // Não quebrar a UX se a migration 012 ainda não foi aplicada
+    console.warn('logUsageEvent', error.message)
+    return null
+  }
+  if (userId) void touchLastSeen()
+  return true
+}
+
+export async function getPlatformUsageSummary(hours = 24) {
+  const { data, error } = await requireClient().rpc('get_platform_usage_summary', {
+    p_hours: hours,
+  })
+  if (error) throw error
+  return data
+}
+
+export async function getRecentUsageEvents(limit = 80) {
+  const { data, error } = await requireClient()
+    .from('app_usage_events')
+    .select('*, profiles(full_name, email, phone, role)')
+    .order('created_at', { ascending: false })
+    .limit(limit)
+  if (error) throw error
+  return data || []
+}
+
+export async function getActiveUsers(hours = 24) {
+  const since = new Date(Date.now() - hours * 60 * 60 * 1000).toISOString()
+  const { data, error } = await requireClient()
+    .from('profiles')
+    .select('id, full_name, email, phone, role, last_seen_at, created_at')
+    .gte('last_seen_at', since)
+    .order('last_seen_at', { ascending: false })
+  if (error) throw error
+  return data || []
 }
 
 export async function getDashboardStats() {
