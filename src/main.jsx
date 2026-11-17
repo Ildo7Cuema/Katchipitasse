@@ -2,6 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
+import InstallGate from '@/components/InstallGate'
+import PwaUpdateToast from '@/components/PwaUpdateToast'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { CompanyProvider } from '@/contexts/CompanyContext'
 import { NotificationProvider } from '@/contexts/NotificationContext'
@@ -15,7 +17,10 @@ createRoot(document.getElementById('root')).render(
         <CompanyProvider>
           <PlatformAccessProvider>
             <NotificationProvider>
-              <App />
+              <InstallGate>
+                <App />
+                <PwaUpdateToast />
+              </InstallGate>
             </NotificationProvider>
           </PlatformAccessProvider>
         </CompanyProvider>

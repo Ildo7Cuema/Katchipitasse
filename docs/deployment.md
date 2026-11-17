@@ -23,6 +23,20 @@ Ferramentas locais:
 
 ---
 
+## 0. PWA (instalação no telemóvel)
+
+A app é uma Progressive Web App:
+
+- No telemóvel, ao abrir o link no browser, surge um **modal obrigatório** para instalar (outras áreas ficam bloqueadas até instalar).
+- Quando há nova versão publicada, o utilizador vê um aviso **Nova actualização** (e notificação do sistema, se autorizar).
+- Desktop e app Capacitor nativa **não** são bloqueados por este modal.
+
+Requisitos: HTTPS (Vercel), ícones em `public/pwa/`, service worker gerado pelo `vite-plugin-pwa`.
+
+Após cada deploy, os clientes actualizam ao aceitar o aviso de actualização.
+
+---
+
 ## 1. Vercel (web)
 
 ### 1.1 Variáveis de ambiente (Vercel → Project → Settings → Environment Variables)

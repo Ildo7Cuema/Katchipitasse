@@ -11,7 +11,8 @@
     "cap:add": "npx cap add android && npx cap add ios",
     "cap:android": "npm run cap:sync && npx cap open android",
     "cap:ios": "npm run cap:sync && npx cap open ios",
-    "seed:admins": "node --env-file=.env scripts/seed-admins.mjs"
+    "seed:admins": "node --env-file=.env scripts/seed-admins.mjs",
+    "pwa:icons": "node scripts/generate-pwa-icons.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.6.2",
@@ -32,6 +33,7 @@
     "@tailwindcss/vite": "^4.3.5",
     "@vitejs/plugin-react": "^6.3.0",
     "tailwindcss": "^4.3.5",
-    "vite": "^8.3.8"
+    "vite": "^8.3.8",
+    "vite-plugin-pwa": "^2.0.0"
   }
 }

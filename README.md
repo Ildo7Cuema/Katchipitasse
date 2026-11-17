@@ -32,8 +32,9 @@ Sem Supabase configurado, a app corre em **modo demonstração** (catálogo loca
 ## Produção (resumo)
 
 1. **Web (Vercel)** — importar o repo, definir `VITE_*`, deploy. Ver [`docs/deployment.md`](docs/deployment.md).
-2. **Android (Play Store)** — `npm run cap:add` / `npm run cap:android` → AAB assinado → Play Console.
-3. **iOS (App Store)** — requer **Mac** + Xcode → Archive → App Store Connect.
+2. **PWA** — no telemóvel, modal obrigatório para instalar; aviso quando há nova actualização.
+3. **Android (Play Store)** — `npm run cap:add` / `npm run cap:android` → AAB assinado → Play Console.
+4. **iOS (App Store)** — requer **Mac** + Xcode → Archive → App Store Connect.
 
 App ID: `ao.katchiitassi.elavoko`
 
