@@ -86,15 +86,19 @@ export default function HomePage() {
             src={logoSrc}
             alt={settings.company_name}
             className="mb-5 max-w-[220px] bg-transparent md:max-w-[320px]"
-            imgClassName="mx-auto max-h-24 md:mx-0 md:max-h-36"
+            imgClassName="mx-auto max-h-24 md:mx-0 md:max-h-36 drop-shadow-sm"
           />
           {user && firstName ? (
             <p className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-brand-950 shadow-sm backdrop-blur">
               <Sparkles size={12} className="text-clay-500" /> Olá, {firstName}
             </p>
           ) : null}
-          <p className="max-w-md text-base font-medium text-brand-950">{settings.tagline}</p>
-          <p className="mt-3 max-w-lg text-sm leading-relaxed text-ink-700">{settings.description}</p>
+          <p className="max-w-md text-base font-medium text-brand-950 [text-shadow:0_1px_8px_rgba(255,255,255,0.85)]">
+            {settings.tagline}
+          </p>
+          <p className="mt-3 max-w-lg text-sm leading-relaxed text-ink-700 [text-shadow:0_1px_8px_rgba(255,255,255,0.8)]">
+            {settings.description}
+          </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
             <Link to="/restaurante">
               <Button>

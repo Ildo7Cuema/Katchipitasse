@@ -84,7 +84,9 @@ export default function HeroCarousel({ slides = [], intervalMs = 5000, children 
             loading={i === 0 ? 'eager' : 'lazy'}
           />
         ))}
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/88 to-black/75" />
+        {/* Gradientes só nas extremidades — o centro da foto fica visível */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[42%] bg-gradient-to-b from-white/55 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black/50 to-transparent" />
       </div>
 
       <div className="relative flex min-h-[78vh] flex-col justify-between px-5 pb-10 pt-10 md:min-h-[560px] md:px-10">
