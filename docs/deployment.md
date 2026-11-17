@@ -23,17 +23,33 @@ Ferramentas locais:
 
 ---
 
-## 0. PWA (instalação no telemóvel)
+## 0. PWA (instalação + push)
 
 A app é uma Progressive Web App:
 
 - No telemóvel, ao abrir o link no browser, surge um **modal obrigatório** para instalar (outras áreas ficam bloqueadas até instalar).
-- Quando há nova versão publicada, o utilizador vê um aviso **Nova actualização** (e notificação do sistema, se autorizar).
-- Desktop e app Capacitor nativa **não** são bloqueados por este modal.
+- Se o diálogo nativo do Chrome não aparecer, o modal mostra **passos manuais** (menu ⋮ → Instalar aplicação).
+- Quando há nova versão publicada, o utilizador vê um aviso **Nova actualização**.
+- **Web Push**: com a app fechada e internet ligada, os admins podem receber notificações de novos pedidos/reservas.
+- Desktop e app Capacitor nativa **não** são bloqueados pelo modal de instalação.
 
-Requisitos: HTTPS (Vercel), ícones em `public/pwa/`, service worker gerado pelo `vite-plugin-pwa`.
+### Variáveis / secrets Push
 
-Após cada deploy, os clientes actualizam ao aceitar o aviso de actualização.
+| Onde | Variável |
+|------|----------|
+| Vercel (`VITE_*`) | `VITE_VAPID_PUBLIC_KEY` |
+| Supabase Edge Function secrets | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` |
+
+```bash
+npx web-push generate-vapid-keys
+# Migration
+# supabase/migrations/011_push_subscriptions.sql
+# Deploy function
+supabase functions deploy send-push
+supabase secrets set VAPID_PUBLIC_KEY=... VAPID_PRIVATE_KEY=... VAPID_SUBJECT=mailto:...
+```
+
+Requisitos: HTTPS (Vercel), ícones em `public/pwa/`, service worker (`src/sw.js`).
 
 ---
 

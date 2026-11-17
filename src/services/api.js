@@ -12,6 +12,7 @@ import {
 } from '@/lib/paymentGpo'
 import { fallbackPlatformGpo } from '@/lib/subscriptionBilling'
 import { resolveAnnualPeriod } from '@/lib/subscriptionPeriod'
+import { requestAdminPush } from '@/lib/webPush'
 
 function requireClient() {
   if (!supabase) throw new Error('Supabase não configurado. Defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY.')
@@ -209,6 +210,13 @@ export async function createOrder({ userId, customerName, customerPhone, notes, 
 
   const { error: itemsError } = await client.from('order_items').insert(lines)
   if (itemsError) throw itemsError
+
+  void requestAdminPush({
+    title: 'Novo pedido',
+    body: `${customerName || 'Cliente'} · ${customerPhone || 'sem telefone'}`,
+    url: '/admin/pedidos',
+  })
+
   return order
 }
 
@@ -284,6 +292,13 @@ export async function createReservation(payload) {
     }
     throw error
   }
+
+  void requestAdminPush({
+    title: 'Nova reserva',
+    body: `${payload.customer_name || 'Cliente'} · ${payload.guests || 1} hóspede(s)`,
+    url: '/admin/reservas',
+  })
+
   return data
 }
 
