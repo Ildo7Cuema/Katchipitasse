@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+
+  /* Official logo palette: black + vivid red */
+  --color-brand-950: #000000;
+  --color-brand-900: #0a0a0a;
+  --color-brand-800: #141414;
+  --color-brand-700: #1f1f1f;
+  --color-brand-600: #2e2e2e;
+  --color-brand-500: #3d3d3d;
+  --color-sand-50: #ffffff;
+  --color-sand-100: #f5f5f5;
+  --color-sand-200: #ebebeb;
+  --color-sand-300: #d4d4d4;
+  --color-clay-500: #e10600;
+  --color-clay-600: #c10500;
+  --color-clay-700: #9a0400;
+  --color-ink-900: #000000;
+  --color-ink-700: #1a1a1a;
+  --color-ink-500: #5c5c5c;
+  --color-ink-300: #a3a3a3;
+  --color-success: #1f7a3f;
+  --color-warning: #c48a1a;
+  --color-danger: #e10600;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 h-dvh overflow-hidden bg-sand-100 font-sans text-ink-900 antialiased;
+    background-image:
+      radial-gradient(ellipse 75% 50% at 0% -10%, rgba(225, 6, 0, 0.1), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 100% 0%, rgba(0, 0, 0, 0.05), transparent 50%);
+  }
+
+  #root {
+    @apply h-dvh overflow-hidden;
+  }
+
+  button,
+  a {
+    @apply touch-manipulation;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .pt-safe {
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.45s ease-out both;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.35s ease-out both;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.4s ease-out both;
+  }
+
+  .animate-slide-right {
+    animation: slide-right 0.5s ease-out both;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
